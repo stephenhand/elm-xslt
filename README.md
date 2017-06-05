@@ -3,9 +3,13 @@ Work in progress project to expose XSLT transform functionality in Elm.
 
 Currently a one method API:
 
+~~~
 transform: String -> String -> String
+~~~
 
 Basically pass in a string with your stylesheet contents in it, a string with your xml source content to be transformed, and out comes a string with your transformed content.
+
+Partially calling this API can give performance benefits. The stylesheet is loaded into the XSLT processing engine as soon as the first parameter is called, ready to transform the data loaded with the second parameter. If you plan to transform several source documents with the same stylesheet, you should set the stylesheet once, then reuse the returned function for each document you want to transform.
 
 TODO:
 

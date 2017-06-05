@@ -1,11 +1,7 @@
 /**
  * Created by stephen.hand on 05/06/2017.
  */
-/**
- * Created by stephen.hand on 09/03/2017.
- */
 
-//extern F2
 
 var _stephenhand$elm_xslt$Native_Xslt = function(){
     if (!window || (!window.XSLTProcessor && !window.ActiveXObject && !"ActiveXObject" in window)){
@@ -28,7 +24,7 @@ var _stephenhand$elm_xslt$Native_Xslt = function(){
                  }
             }
             return function(source){
-                var xmlDoc = parser.parseFromString(source, "application/xml");
+                var xmlDoc;
                 try{
                     xmlDoc = parser.parseFromString(source, "application/xml");
                 }
