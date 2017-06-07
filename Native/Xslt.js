@@ -4,15 +4,16 @@
 
 
 var _stephenhand$elm_xslt$Native_Xslt = function(){
-    if (!window || (!window.XSLTProcessor && !window.ActiveXObject && !"ActiveXObject" in window)){
-        throw new Error("XSLT not supported.")
-    }
+    var isSupported = (window && (window.XSLTProcessor || window.ActiveXObject || "ActiveXObject" in window));
 
     var parser = new DOMParser();
     var serializer = new XMLSerializer();
 
     return {
         transform : function(stylesheet){
+            if (!isSupported){
+                throw new Error("XSLT not supported.");
+            }
             var processor =  new XSLTProcessor();
             try{
                 var xslDoc = parser.parseFromString(stylesheet, "text/xml");
