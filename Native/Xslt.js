@@ -12,7 +12,20 @@ var _stephenhand$elm_xslt$Native_Xslt = function(){
     return {
         transform : function(stylesheet){
             if (!isSupported){
-                throw new Error("XSLT not supported.");
+                return function(source){
+                    _elm_lang$core$Result$Err({
+                        message:"XSLT not supported.",
+                        code:1
+                    });
+                }
+            }
+            if (!stylesheet){
+                return function(source){
+                    return _elm_lang$core$Result$Err({
+                        message:"Stylesheet not specified",
+                        code:2
+                    });
+                }
             }
             var processor =  new XSLTProcessor();
             try{
@@ -21,24 +34,39 @@ var _stephenhand$elm_xslt$Native_Xslt = function(){
             }
             catch(e){
                  return function(source){
-                     return "Error loading stylesheet:\r\n"+e.toString()
+                     return _elm_lang$core$Result$Err({
+                         message:"Error loading stylesheet:\r\n"+e.toString(),
+                         code:3
+                     });
                  }
             }
             return function(source){
+                if (!source){
+                    return _elm_lang$core$Result$Err({
+                        message:"No source data",
+                        code:4
+                    });
+                }
                 var xmlDoc;
                 try{
                     xmlDoc = parser.parseFromString(source, "application/xml");
                 }
                 catch(e){
-                    return "Error deserializing source data:\r\n"+e.toString();
+                    return _elm_lang$core$Result$Err({
+                        message:"Error deserializing source data:\r\n"+e.toString(),
+                        code:5
+                    });
                 }
                 try{
 
                     var outputDoc = processor.transformToDocument(xmlDoc);
-                    return serializer.serializeToString(outputDoc);
+                    return _elm_lang$core$Result$Ok(serializer.serializeToString(outputDoc));
                 }
                 catch(e){
-                    return "Error transforming source data:\r\n"+e.toString();
+                    return _elm_lang$core$Result$Err({
+                        message:"Error transforming source data:\r\n"+e.toString(),
+                        code:6
+                    });
                 }
             }
         },

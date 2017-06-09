@@ -1,7 +1,11 @@
-module Xslt exposing (transform)
+module Xslt exposing (transform, TransformError)
 import Native.Xslt
 
-transform : String -> String -> String
+type alias TransformError = {
+    code:Int,
+    message:String}
+
+transform : String -> String -> Result TransformError String
 
 transform styleSheet =
     Native.Xslt.transform(styleSheet)

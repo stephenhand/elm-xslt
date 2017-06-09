@@ -71,15 +71,36 @@ errorOutput = [color "red",
 -- VIEW
 view : Model -> Html Msg
 view model =
+  let
+    transformed : Result Xslt.TransformError String
+    transformed = Xslt.transform model.stylesheet model.source
+  in
   div [style container]
     [
         div [style pane] [
             textarea [ onInput (\newValue -> SourceUpdated newValue), style codeInput, placeholder "Source XML"] [],
             textarea [ onInput (\newValue -> StyleSheetUpdated newValue), style codeInput, placeholder "XSLT Stylesheet"] []
         ],
+
         div [style rightPane] [
-            code [style codeOutput] [
-                text (Xslt.transform model.stylesheet model.source)
+            code [style
+                (case transformed of
+                    Ok output ->
+                        codeInput
+                    Err error ->
+                        if error.code == 2 || error.code == 4 then
+                            codeOutput
+                        else
+                            errorOutput)
+            ] [
+                text (case transformed of
+                  Ok output ->
+                      output
+                  Err error ->
+                    if error.code == 2 || error.code == 4 then
+                        ""
+                    else
+                      error.message)
             ]
         ]
     ]
