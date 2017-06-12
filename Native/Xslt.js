@@ -18,6 +18,7 @@ var _stephenhand$elm_xslt$Native_Xslt = function(){
     var parser = new DOMParser();
     var serializer = new XMLSerializer();
 
+
     function createTransformer(stylesheet){
         var xslDoc, xmlDoc;
         if (XSLT_API==="MOZILLA"){
@@ -33,6 +34,9 @@ var _stephenhand$elm_xslt$Native_Xslt = function(){
             xslDoc =new ActiveXObject("Msxml2.DOMDocument.3.0");
             xslDoc.loadXML(stylesheet);
             return function(xml){
+                //While IE9+ supports XMLSerializer, ActiveX XSLT requires an MSXML
+                //document that supports the transformNode method, which XMLSerializer
+                //does not return, so  the source data has to be loaded via ActiveX too.
                 xmlDoc =new ActiveXObject("Msxml2.DOMDocument.3.0");
                 xmlDoc.loadXML(xml);
                 return xmlDoc.transformNode(xslDoc);
