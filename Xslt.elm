@@ -8,4 +8,14 @@ type alias TransformError = {
 transform : String -> String -> Result TransformError String
 
 transform styleSheet =
-    Native.Xslt.transform(styleSheet)
+    let
+        partialResult : Result TransformError (String -> Result TransformError String)
+        partialResult = Native.Xslt.transform(styleSheet)
+    in
+        case partialResult of
+            Err error ->
+                (\input -> Err error)
+            Ok partial ->
+                partial
+
+

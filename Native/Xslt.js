@@ -44,34 +44,28 @@ var _stephenhand$elm_xslt$Native_Xslt = function(){
     return {
         transform : function(stylesheet){
             if (!stylesheet){
-                return function(source){
-                    return _elm_lang$core$Result$Err({
-                        message:"Stylesheet not specified",
-                        code:2
-                    });
-                }
+                return _elm_lang$core$Result$Err({
+                    message:"Stylesheet not specified",
+                    code:2
+                });
             }
             var transformer;
             try{
                 transformer = createTransformer(stylesheet);
             }
             catch(e){
-                return function(source){
-                    return _elm_lang$core$Result$Err({
-                        message:"Error loading stylesheet:\r\n"+e.toString(),
-                        code:3
-                    });
-                }
+                return _elm_lang$core$Result$Err({
+                    message:"Error loading stylesheet:\r\n"+e.toString(),
+                    code:3
+                });
             }
             if (!transformer){
-                return function(source){
-                    _elm_lang$core$Result$Err({
-                        message:"XSLT not supported.",
-                        code:1
-                    });
-                };
+                _elm_lang$core$Result$Err({
+                    message:"XSLT not supported.",
+                    code:1
+                });
             }
-            return function(source){
+            return _elm_lang$core$Result$Ok(function(source){
                 if (!source){
                     return _elm_lang$core$Result$Err({
                         message:"No source data",
@@ -87,7 +81,7 @@ var _stephenhand$elm_xslt$Native_Xslt = function(){
                         code:6
                     });
                 }
-            }
+            });
         }
     }
 }();
