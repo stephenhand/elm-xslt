@@ -4,6 +4,17 @@
 
 
 var _stephenhand$elm_xslt$Native_Xslt = function(){
+    var DOMParser, XMLSerializer;
+    if (window.DOMParser && window.XMLSerializer){
+        DOMParser = window.DOMParser;
+        XMLSerializer = window.XMLSerializer;
+    }
+    else if(require){
+        console.log("Not running in a browser");
+        DOMParser = require("xmldom").DOMParser;
+        XMLSerializer = require("xmldom").XMLSerializer;
+    }
+    
     var XSLT_API;
     if (window && window.XSLTProcessor){
         XSLT_API = "MOZILLA";
