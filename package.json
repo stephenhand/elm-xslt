@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "karma": "~1.7.0",
+    "karma-elm-test": "~0.0.3",
+    "karma-chrome-launcher": "~2.1.1",
+    "karma-edge-launcher":"~0.4.1"
+  }
+
+}

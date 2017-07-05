@@ -1,7 +1,7 @@
 # elm-xslt
-Work in progress project to expose XSLT transform functionality in Elm.
+Project to expose XSLT transform functionality in Elm.
 
-Currently a one method API:
+Currently a one function API:
 
 ~~~
 transform: String -> String -> Result {code:Int, message:String} String
@@ -12,8 +12,6 @@ Basically pass in a string with your stylesheet contents in it, a string with yo
 Partially calling this API can give performance benefits. The stylesheet is loaded into the XSLT processing engine as soon as the first parameter is called, ready to transform the data loaded with the second parameter. If you plan to transform several source documents with the same stylesheet, you should set the stylesheet once, then reuse the returned function for each document you want to transform.
 
 TODO:
-
-* Internet Explorer support (Edge is supported along with other major browsers, just not IE just yet)
 
 * Potentially expand API to support inputs other than document contents as strings, like URLs or typed source data, but this will be on an 'as required' or 'on request' basis
 
